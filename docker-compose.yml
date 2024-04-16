@@ -38,8 +38,9 @@ services:
       MYSQL_DATABASE: ${MYSQL_MASTER_DATABASE}
       MYSQL_USER: ${MYSQL_MASTER_USER}
       MYSQL_PASSWORD: ${MYSQL_MASTER_PASSWORD}
-    restart: "no"
-    entrypoint: /masterdb/initial.sh
+    volumes:
+      - replica_db_data:/var/lib/mysql
+      - /masterdb/initial.sh:/docker-entrypoint-initdb.d/initial.sh:ro
 
   mariadb_replica:
     image: mariadb:latest
@@ -48,7 +49,15 @@ services:
       MYSQL_DATABASE: ${MYSQL_REPLICA_DATABASE}
       MYSQL_USER: ${MYSQL_REPLICA_USER}
       MYSQL_PASSWORD: ${MYSQL_REPLICA_PASSWORD}
-    restart: "no"
-    entrypoint: /replicadb/initial.sh
+    depends_on:
+      - mariadb_master
+    # restart: "no"
+    # entrypoint: /replicadb/initial.sh
+    # command: bash -c "cp /mnt/config_replica.sh /docker-entrypoint-initdb.d/ && /docker-entrypoint-initdb.d/config_replica.sh"
+    volumes:
+      - replica_db_data:/var/lib/mysql
+      - /replicadb/initial.sh:/docker-entrypoint-initdb.d/initial.sh:ro
 volumes:
   wordpress_data:
+  master_db_data:
+  replica_db_data:
