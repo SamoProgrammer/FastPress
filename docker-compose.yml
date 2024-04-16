@@ -34,20 +34,20 @@ services:
   mariadb_master:
     image: mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_MASTER_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_MASTER_DATABASE}
+      MYSQL_USER: ${MYSQL_MASTER_USER}
+      MYSQL_PASSWORD: ${MYSQL_MASTER_PASSWORD}
     restart: "no"
     entrypoint: /masterdb/initial.sh
 
   mariadb_replica:
     image: mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_REPLICA_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_REPLICA_DATABASE}
+      MYSQL_USER: ${MYSQL_REPLICA_USER}
+      MYSQL_PASSWORD: ${MYSQL_REPLICA_PASSWORD}
     restart: "no"
     entrypoint: /replicadb/initial.sh
 volumes:
