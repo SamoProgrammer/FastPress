@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - wordpress1
+      - wordpress2
+
+  wordpress1:
+    image: wordpress:latest
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: your_db_user
+      WORDPRESS_DB_PASSWORD: your_db_password
+      WORDPRESS_DB_NAME: your_db_name
+
+  wordpress2:
+    image: wordpress:latest
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: your_db_user
+      WORDPRESS_DB_PASSWORD: your_db_password
+      WORDPRESS_DB_NAME: your_db_name
+
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_DATABASE: your_db_name
+      MYSQL_USER: your_db_user
+      MYSQL_PASSWORD: your_db_password
+
+volumes:
+  wordpress_data:
