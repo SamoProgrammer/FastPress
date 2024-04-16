@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# .env file variables sourced into script
+source ../.env
+
 # Edit the MariaDB configuration file to include the server ID and enable binary logging
 echo "[mysqld]" >> /etc/mysql/my.cnf
 echo "server-id=2" >> /etc/mysql/my.cnf
@@ -14,9 +17,9 @@ mysql -u root -p
 
 # Configure the replica to connect to the master and start replicating data
 mysql> CHANGE MASTER TO
-mysql>   MASTER_HOST='master_host_name',
-mysql>   MASTER_USER='replication_user',
-mysql>   MASTER_PASSWORD='your_password',
+mysql>   MASTER_HOST='$MYSQL_MASTER_DATABASE',
+mysql>   MASTER_USER='$REPLICATION_USER_NAME',
+mysql>   MASTER_PASSWORD='$REPLICATION_USER_PASSWORD',
 mysql>   MASTER_LOG_FILE='master_log_file',
 mysql>   MASTER_LOG_POS=master_log_position;
 mysql> START SLAVE;

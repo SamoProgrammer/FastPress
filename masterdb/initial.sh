@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# .env file variables sourced into script
+source ../.env
+
 # Edit the MariaDB configuration file to include the server ID and enable binary logging
 echo "[mysqld]" >> /etc/mysql/my.cnf
 echo "server-id=1" >> /etc/mysql/my.cnf
@@ -13,7 +16,7 @@ service mysql restart
 mysql -u root -p
 
 # Create a replication user with the necessary permissions
-mysql> CREATE USER 'replication_user'@'%' IDENTIFIED BY 'your_password';
-mysql> GRANT REPLICATION SLAVE ON *.* TO 'replication_user'@'%';
+mysql> CREATE USER '$REPLICATION_USER_NAME'@'%' IDENTIFIED BY '$REPLICATION_USER_PASSWORD';
+mysql> GRANT REPLICATION SLAVE ON *.* TO '$REPLICATION_USER_NAME'@'%';
 mysql> FLUSH PRIVILEGES;
 mysql> EXIT;
