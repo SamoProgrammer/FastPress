@@ -3,6 +3,7 @@ version: "3.8"
 services:
   nginx:
     image: nginx:latest
+    container_name: nginx
     ports:
       - "80:80"
     volumes:
@@ -13,6 +14,7 @@ services:
 
   wordpress1:
     image: wordpress:latest
+    container_name: wordpress1
     volumes:
       - wordpress_data:/var/www/html
     environment:
@@ -23,6 +25,7 @@ services:
 
   wordpress2:
     image: wordpress:latest
+    container_name: wordpress2
     volumes:
       - wordpress_data:/var/www/html
     environment:
@@ -33,6 +36,7 @@ services:
 
   mariadb_master:
     image: mariadb:latest
+    container_name: mariadb_master
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_MASTER_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_MASTER_DATABASE}
@@ -42,9 +46,10 @@ services:
       - master_db_data:/var/lib/mysql
       - ./masterdb/initial.sh:/var/lib/initial.sh
     command: /var/lib/initial.sh
-    
+
   mariadb_replica:
     image: mariadb:latest
+    container_name: mariadb_replica
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_REPLICA_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_REPLICA_DATABASE}
