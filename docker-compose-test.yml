@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  proxysql:
+    image: perconalab/proxysql:2.4
+    restart: unless-stopped
+    ports:
+      - "6032:6032"
+      - "6033:6033"
+    environment:
+      - PROXY_SQL_ADMIN_USER=admin
+      - PROXY_SQL_ADMIN_PASSWORD=password
+      - PROXY_SQL_MONITORING_USER=monitor
+      - PROXY_SQL_MONITORING_PASSWORD=password
+      - PROXY_SQL_USERS=user1:password1,user2:password2
+      - PROXY_SQL_HOSTGROUPS=writer:mariadb-master:3306,reader:mariadb-slave:3307
+      - PROXY_SQL_QUERY_RULES="^SELECT.*$ -> reader, ^INSERT.*$ -> writer, ^UPDATE.*$ -> writer, ^DELETE.*$ -> writer"
+    container_name: "proxysql-the-gatekeeper"
+
+  mariadb-master:
+    image: mariadb:10.8
+    restart: unless-stopped
+    hostname: mariadb-master
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=user1
+      - MYSQL_PASSWORD=password1
+      - MYSQL_DATABASE=mydatabase
+    container_name: "mariadb-master-the-fountainhead"
+
+  mariadb-slave:
+    image: mariadb:10.8
+    restart: unless-stopped
+    hostname: mariadb-slave
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=user2
+      - MYSQL_PASSWORD=password2
+      - MYSQL_DATABASE=mydatabase
+      - MYSQL_REPLICATION_USER=repluser
+      - MYSQL_REPLICATION_PASSWORD=replpassword
+      - MYSQL_MASTER_HOST=mariadb-master
+      - MYSQL_MASTER_PORT=3306
+      - MYSQL_MASTER_USER=repluser
+      - MYSQL_MASTER_PASSWORD=replpassword
+    container_name: "mariadb-slave-the-replicator"
+
+  wordpress:
+    image: wordpress:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - WORDPRESS_DB_HOST=proxysql
+      - WORDPRESS_DB_USER=user1
+      - WORDPRESS_DB_PASSWORD=password1
+      - WORDPRESS_DB_NAME=mydatabase
+    depends_on:
+      - proxysql
+    container_name: "wordpress-the-storyteller"
+
+networks:
+  default:
+    name: proxy-mariadb-net
