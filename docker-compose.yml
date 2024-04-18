@@ -57,6 +57,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${PROXYSQL_ROOT_PASSWORD}
     volumes:
       - ./proxysql/proxysql.cnf:/etc/proxysql.cnf
+    depends_on:
+      - mariadb_replica
 
   mariadb_master:
     image: mariadb:latest
