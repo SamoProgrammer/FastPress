@@ -17,6 +17,8 @@ services:
     image: wordpress:latest
     container_name: wordpress1
     hostname: wordpress1
+    networks:
+      - cangrownet
     depends_on:
       - mariadb_replica
     volumes:
@@ -31,6 +33,8 @@ services:
     image: wordpress:latest
     container_name: wordpress2
     hostname: wordpress2
+    networks:
+      - cangrownet
     depends_on:
       - mariadb_replica
     volumes:
@@ -45,6 +49,8 @@ services:
     image: mariadb:latest
     container_name: mariadb_master
     hostname: mariadb_master
+    networks:
+      - cangrownet
     environment:
       - MYSQL_ROOT_PASSWORD: ${MYSQL_MASTER_ROOT_PASSWORD}
       - MYSQL_DATABASE: ${MYSQL_MASTER_DATABASE}
@@ -60,6 +66,8 @@ services:
     image: mariadb:latest
     container_name: mariadb_replica
     hostname: mariadb_replica
+    networks:
+      - cangrownet
     environment:
       - MYSQL_ROOT_PASSWORD: ${MYSQL_REPLICA_ROOT_PASSWORD}
       - MYSQL_DATABASE: ${MYSQL_REPLICA_DATABASE}
@@ -72,16 +80,17 @@ services:
       - ./replicadb/replicadb.cnf:/etc/MYSQL/conf.d/MYSQL.cnf
     ports:
       - "3307:3306"
-    # command: /var/lib/initial.sh
+
+
 volumes:
   wordpress_data:
   master_db_data:
   replica_db_data:
 networks:
   cangrownet:
-      driver: bridge
-      ipam:
-          driver: default
-          config:
-              - subnet: "192.168.0.0/28"
-                gateway: "192.168.0.1"
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.0.0/28"
+          gateway: "192.168.0.1"
