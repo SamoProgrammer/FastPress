@@ -63,7 +63,7 @@ services:
       - mariadb_master
     volumes:
       - replica_db_data:/var/lib/mysql
-      - ./replica_db/replicadb.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./replicadb/replicadb.cnf:/etc/mysql/conf.d/mysql.cnf
     # command: /var/lib/initial.sh
 volumes:
   wordpress_data:
