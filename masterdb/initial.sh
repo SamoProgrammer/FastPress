@@ -3,6 +3,8 @@
 # .env file variables sourced into script
 # source ../.env
 
+echo $MARIADB_MASTER_ROOT_PASSWORD
+
 # Create user on master database.
 docker exec mariadb_master \
     mariadb -u root --password=$MARIADB_MASTER_ROOT_PASSWORD \
