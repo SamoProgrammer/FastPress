@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # .env file variables sourced into script
-source ../.env
+# source ../.env
 
 # Create user on master database.
 docker exec mariadb_master \
