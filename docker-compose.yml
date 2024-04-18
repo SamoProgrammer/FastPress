@@ -20,10 +20,10 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      - "WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}"
+      - "WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}"
+      - "WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}"
+      - "WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}"
 
   wordpress2:
     image: wordpress:latest
@@ -33,37 +33,37 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      - "WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}"
+      - "WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}"
+      - "WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}"
+      - "WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}"
 
   mariadb_master:
     image: mariadb:latest
     container_name: mariadb_master
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_MASTER_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_MASTER_DATABASE}
-      MYSQL_USER: ${MYSQL_MASTER_USER}
-      MYSQL_PASSWORD: ${MYSQL_MASTER_PASSWORD}
+      - "MARIADB_ROOT_PASSWORD: ${MARIADB_MASTER_ROOT_PASSWORD}"
+      - "MARIADB_DATABASE: ${MARIADB_MASTER_DATABASE}"
+      - "MARIADB_USER: ${MARIADB_MASTER_USER}"
+      - "MARIADB_PASSWORD: ${MARIADB_MASTER_PASSWORD}"
     volumes:
-      - master_db_data:/var/lib/mysql
-      - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/mysql.cnf
+      - master_db_data:/var/lib/MARIADB
+      - ./masterdb/masterdb.cnf:/etc/MARIADB/conf.d/MARIADB.cnf
     # command: /var/lib/initial.sh
 
   mariadb_replica:
     image: mariadb:latest
     container_name: mariadb_replica
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_REPLICA_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_REPLICA_DATABASE}
-      MYSQL_USER: ${MYSQL_REPLICA_USER}
-      MYSQL_PASSWORD: ${MYSQL_REPLICA_PASSWORD}
+      - "MARIADB_ROOT_PASSWORD: ${MARIADB_REPLICA_ROOT_PASSWORD}"
+      - "MARIADB_DATABASE: ${MARIADB_REPLICA_DATABASE}"
+      - "MARIADB_USER: ${MARIADB_REPLICA_USER}"
+      - "MARIADB_PASSWORD: ${MARIADB_REPLICA_PASSWORD}"
     depends_on:
       - mariadb_master
     volumes:
-      - replica_db_data:/var/lib/mysql
-      - ./replicadb/replicadb.cnf:/etc/mysql/conf.d/mysql.cnf
+      - replica_db_data:/var/lib/MARIADB
+      - ./replicadb/replicadb.cnf:/etc/MARIADB/conf.d/MARIADB.cnf
     # command: /var/lib/initial.sh
 volumes:
   wordpress_data:
