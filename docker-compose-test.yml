@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   proxysql:
-    image: perconalab/proxysql:2.4
+    image: percona/proxysql2:latest
     restart: unless-stopped
     ports:
       - "6032:6032"
