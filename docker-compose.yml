@@ -16,7 +16,7 @@ services:
   wordpress1:
     image: wordpress:latest
     container_name: wordpress1
-    hostname: wordpress1
+    # hostname: wordpress1
     networks:
       - cangrownet
     depends_on:
@@ -32,7 +32,7 @@ services:
   wordpress2:
     image: wordpress:latest
     container_name: wordpress2
-    hostname: wordpress2
+    # hostname: wordpress2
     networks:
       - cangrownet
     depends_on:
