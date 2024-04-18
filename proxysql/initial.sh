@@ -10,7 +10,7 @@ master_db_password="$MASTER_PASSWORD"
 
 
 # Generate proxysql.cnf content
-cat <<EOF >proxysql.cnf
+cat <<EOF >./proxysql/proxysql.cnf
 # ProxySQL Admin Variables
 admin_variables=
 {
