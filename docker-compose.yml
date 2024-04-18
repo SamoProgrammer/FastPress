@@ -47,6 +47,13 @@ services:
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
 
+  proxysql:
+    image: proxysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PROXYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./proxysql/proxysql.cnf:/etc/proxysql.cnf
+
   mariadb_master:
     image: mariadb:latest
     container_name: mariadb_master
@@ -54,15 +61,15 @@ services:
     networks:
       - cangrownet
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_MASTER_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_MASTER_DATABASE}
-      MYSQL_USER: ${MYSQL_MASTER_USER}
-      MYSQL_PASSWORD: ${MYSQL_MASTER_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MASTER_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MASTER_DATABASE}
+      MYSQL_USER: ${MASTER_USER}
+      MYSQL_PASSWORD: ${MASTER_PASSWORD}
     volumes:
       - master_db_data:/var/lib/mysql
       - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf
-      - ./.env:/docker-entrypoint-initdb.d/.env
-      - ./masterdb:/docker-entrypoint-initdb.d
+      # - ./.env:/docker-entrypoint-initdb.d/.env
+      # - ./masterdb:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
 
@@ -73,17 +80,17 @@ services:
     networks:
       - cangrownet
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_REPLICA_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_REPLICA_DATABASE}
-      MYSQL_USER: ${MYSQL_REPLICA_USER}
-      MYSQL_PASSWORD: ${MYSQL_REPLICA_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${REPLICA_ROOT_PASSWORD}
+      # MYSQL_DATABASE: ${REPLICA_DATABASE}
+      MYSQL_USER: ${REPLICA_USER}
+      MYSQL_PASSWORD: ${REPLICA_PASSWORD}
     depends_on:
       - mariadb_master
     volumes:
       - replica_db_data:/var/lib/mysql
       - ./replicadb/replicadb.cnf:/etc/mysql/conf.d/replicadb.cnf
-      - ./.env:/docker-entrypoint-initdb.d/.env
-      - ./replicadb:/docker-entrypoint-initdb.d
+      # - ./.env:/docker-entrypoint-initdb.d/.env
+      # - ./replicadb:/docker-entrypoint-initdb.d
     ports:
       - "3307:3306"
 
