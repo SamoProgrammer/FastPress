@@ -40,3 +40,6 @@ mysql_query_rules =
     { rule_id=2, active=1, match_pattern="^UPDATE.*|^INSERT.*|DELETE.*", destination_hostgroup=1 }
 )
 EOF
+
+cat proxysql.cnf
+echo proxysql.cnf
