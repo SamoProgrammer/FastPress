@@ -8,11 +8,11 @@ result=$(docker exec $MYSQL_MASTER_DATABASE mysql -u root --password=$MYSQL_MAST
 log=$(echo $result | awk '{print $5}')
 position=$(echo $result | awk '{print $6}')
 
-docker exec $MYSQL_REPLICA_DATABASE \
+docker exec mariadb_replica \
     mysql -u root --password=$MYSQL_REPLICA_ROOT_PASSWORD \
     --execute="stop slave;\
    reset slave;\
-   CHANGE MASTER TO MASTER_HOST='$MYSQL_REPLICA_DATABAS', MASTER_USER='$REPLICATION_USER_NAME', \
+   CHANGE MASTER TO MASTER_HOST='$MYSQL_MASTER_DATABASE', MASTER_USER='$REPLICATION_USER_NAME', \
    MASTER_PASSWORD='$REPLICATION_USER_PASSWORD', MASTER_LOG_FILE='$log', MASTER_LOG_POS=$position;\
    start slave;\
    SHOW SLAVE STATUS\G;"
