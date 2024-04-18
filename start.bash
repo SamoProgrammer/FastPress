@@ -1,11 +1,13 @@
 source .env
 
+source ./proxysql/initial.sh
+
 docker compose up -d
 
-sleep 10s
+sleep 6s
 
-sudo bash masterdb/initial.sh
+source ./masterdb/initial.sh
 
-sleep 1s
+sleep 2s
 
-sudo bash replicadb/initial.sh
+source ./replicadb/initial.sh
