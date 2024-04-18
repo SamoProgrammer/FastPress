@@ -4,12 +4,12 @@
 # source ../.env
 
 # Connect slave to master.
-result=$(docker exec $MYSQL_MASTER_DATABASE mysql -u root --password=$MYSQL_MASTER_ROOT_PASSWORD --execute="show master status;")
+result=$(docker exec $MYSQL_MASTER_DATABASE mariadb -u root --password=$MYSQL_MASTER_ROOT_PASSWORD --execute="show master status;")
 log=$(echo $result | awk '{print $5}')
 position=$(echo $result | awk '{print $6}')
 
 docker exec mariadb_replica \
-    mysql -u root --password=$MYSQL_REPLICA_ROOT_PASSWORD \
+    mariadb -u root --password=$MYSQL_REPLICA_ROOT_PASSWORD \
     --execute="stop slave;\
    reset slave;\
    CHANGE MASTER TO MASTER_HOST='$MYSQL_MASTER_DATABASE', MASTER_USER='$REPLICATION_USER_NAME', \
