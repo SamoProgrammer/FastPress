@@ -44,8 +44,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_MASTER_PASSWORD}
     volumes:
       - master_db_data:/var/lib/mysql
-      - ./masterdb/initial.sh:/var/lib/initial.sh
-    command: /var/lib/initial.sh
+      - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/mysql.cnf
+    # command: /var/lib/initial.sh
 
   mariadb_replica:
     image: mariadb:latest
@@ -59,8 +59,8 @@ services:
       - mariadb_master
     volumes:
       - replica_db_data:/var/lib/mysql
-      - ./replicadb/initial.sh:/var/lib/initial.sh
-    command: /var/lib/initial.sh
+      - ./replica_db/replicadb.cnf:/etc/mysql/conf.d/mysql.cnf
+    # command: /var/lib/initial.sh
 volumes:
   wordpress_data:
   master_db_data:
