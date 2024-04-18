@@ -59,6 +59,8 @@ services:
     volumes:
       - master_db_data:/var/lib/mysql
       - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf
+      - ./.env:/docker-entrypoint-initdb.d/.env
+      - ./masterdb:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
 
@@ -78,9 +80,10 @@ services:
     volumes:
       - replica_db_data:/var/lib/mysql
       - ./replicadb/replicadb.cnf:/etc/mysql/conf.d/replicadb.cnf
+      - ./.env:/docker-entrypoint-initdb.d/.env
+      - ./replicadb:/docker-entrypoint-initdb.d
     ports:
       - "3307:3306"
-
 
 volumes:
   wordpress_data:

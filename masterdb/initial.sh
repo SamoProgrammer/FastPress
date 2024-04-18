@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # .env file variables sourced into script
-# source ../.env
+source .env
 
 echo "root password is : $MYSQL_MASTER_ROOT_PASSWORD"
 

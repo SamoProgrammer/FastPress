@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # .env file variables sourced into script
-# source ../.env
+source .env
 
 # Connect slave to master.
 result=$(docker exec mariadb_master mariadb -u root --password=$MYSQL_MASTER_ROOT_PASSWORD --execute="show master status;")
