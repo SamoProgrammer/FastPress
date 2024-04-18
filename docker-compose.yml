@@ -24,10 +24,10 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-      - WORDPRESS_DB_HOST: ${MASTER_DB_HOST}
-      - WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      - WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      - WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_HOST: ${MASTER_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
 
   wordpress2:
     image: wordpress:latest
@@ -40,10 +40,10 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-      - WORDPRESS_DB_HOST: ${MASTER_DB_HOST}
-      - WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      - WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      - WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_HOST: ${MASTER_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
 
   mariadb_master:
     image: mariadb:latest
@@ -52,10 +52,10 @@ services:
     networks:
       - cangrownet
     environment:
-      - MYSQL_ROOT_PASSWORD: ${MYSQL_MASTER_ROOT_PASSWORD}
-      - MYSQL_DATABASE: ${MYSQL_MASTER_DATABASE}
-      - MYSQL_USER: ${MYSQL_MASTER_USER}
-      - MYSQL_PASSWORD: ${MYSQL_MASTER_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_MASTER_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_MASTER_DATABASE}
+      MYSQL_USER: ${MYSQL_MASTER_USER}
+      MYSQL_PASSWORD: ${MYSQL_MASTER_PASSWORD}
     volumes:
       - master_db_data:/var/lib/mysql
       - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf
@@ -69,10 +69,10 @@ services:
     networks:
       - cangrownet
     environment:
-      - MYSQL_ROOT_PASSWORD: ${MYSQL_REPLICA_ROOT_PASSWORD}
-      - MYSQL_DATABASE: ${MYSQL_REPLICA_DATABASE}
-      - MYSQL_USER: ${MYSQL_REPLICA_USER}
-      - MYSQL_PASSWORD: ${MYSQL_REPLICA_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_REPLICA_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_REPLICA_DATABASE}
+      MYSQL_USER: ${MYSQL_REPLICA_USER}
+      MYSQL_PASSWORD: ${MYSQL_REPLICA_PASSWORD}
     depends_on:
       - mariadb_master
     volumes:
