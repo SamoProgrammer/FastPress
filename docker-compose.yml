@@ -15,6 +15,8 @@ services:
   wordpress1:
     image: wordpress:latest
     container_name: wordpress1
+    depends_on:
+      - mariadb_replica
     volumes:
       - wordpress_data:/var/www/html
     environment:
@@ -26,6 +28,8 @@ services:
   wordpress2:
     image: wordpress:latest
     container_name: wordpress2
+    depends_on:
+      - mariadb_replica
     volumes:
       - wordpress_data:/var/www/html
     environment:
