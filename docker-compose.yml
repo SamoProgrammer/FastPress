@@ -8,7 +8,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - wordpress1
       - wordpress2
@@ -58,7 +58,7 @@ services:
       - MYSQL_PASSWORD: ${MYSQL_MASTER_PASSWORD}
     volumes:
       - master_db_data:/var/lib/mysql
-      - $PWD/masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf
+      - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf
     ports:
       - "3306:3306"
 
@@ -77,7 +77,7 @@ services:
       - mariadb_master
     volumes:
       - replica_db_data:/var/lib/mysql
-      - $PWD/replicadb/replicadb.cnf:/etc/mysql/conf.d/replicadb.cnf
+      - ./replicadb/replicadb.cnf:/etc/mysql/conf.d/replicadb.cnf
     ports:
       - "3307:3306"
 
