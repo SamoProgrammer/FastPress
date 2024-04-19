@@ -44,7 +44,7 @@ mysql_servers =
 # MySQL Users
 mysql_users =
 (
-    { username = "samo_programmer", password = "Samo@09015267167", default_schema="cangrow_db", active = 1 }
+    { username = "samo_programmer_replica", password = "Replica@09015267167", default_schema="cangrow_db", active = 1 }
     # { username = "samo_programmer", password = "Samo@09015267167", default_hostgroup = 1, active = 1 }
 )
 
