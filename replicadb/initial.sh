@@ -19,7 +19,10 @@ docker exec mariadb_replica \
    MASTER_PASSWORD='$REPLICATION_USER_PASSWORD', MASTER_LOG_FILE='$log', MASTER_PORT=3306,
    MASTER_CONNECT_RETRY=10 , MASTER_LOG_POS=$position;\
    start slave;\
-   create user '$SHARED_USER_NAME'@'%' identified by '$SHARED_USER_PASSWORD';\
-   grant all privileges on '$MASTER_DATABASE'.* to '$SHARED_USER_NAME'@'%';\
-   flush privileges;\
    SHOW SLAVE STATUS\G;"
+
+docker exec mariadb_master mariadb -u root -p "$REPLICA_ROOT_PASSWORD" -e "CREATE USER '$SHARED_USER_NAME'@'%' IDENTIFIED BY '$SHARED_USER_PASSWORD';"
+
+docker exec mariadb_master mariadb -u root -p "$REPLICA_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON *.* TO '$SHARED_USER_NAME'@'localhost';"
+
+docker exec mariadb_master mariadb -u root -p "$REPLICA_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON *.* TO '$SHARED_USER_NAME'@'%';"
