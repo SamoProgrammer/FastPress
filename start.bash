@@ -6,9 +6,8 @@ source ./masterdb/initial.sh
 sleep 3s
 
 source ./replicadb/initial.sh
-sleep 2s
+# sleep 2s
 # source ./proxysql/initial.sh
 
-echo $MASTER_USER
-echo $mariadb_master_host
-
+# echo $MASTER_USER
+# echo $mariadb_master_host
