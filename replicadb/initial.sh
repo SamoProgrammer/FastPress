@@ -20,5 +20,6 @@ docker exec mariadb_replica \
    MASTER_CONNECT_RETRY=10 , MASTER_LOG_POS=$position;\
    start slave;\
    create user '$SHARED_USER_NAME'@'%' identified by '$SHARED_USER_PASSWORD';\
-   grant all privileges on *.* to '$SHARED_USER_NAME'@'%';\
+   grant all privileges on '$MASTER_DATABASE'.* to '$SHARED_USER_NAME'@'%';\
+   flush privileges;\
    SHOW SLAVE STATUS\G;"
