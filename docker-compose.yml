@@ -26,7 +26,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}
+      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
       WORDPRESS_DB_USER: ${MASTER_USER}
       WORDPRESS_DB_PASSWORD: ${MASTER_PASSWORD}
       WORDPRESS_DB_NAME: ${MASTER_DATABASE}
@@ -42,7 +42,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}
+      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
       WORDPRESS_DB_USER: ${MASTER_USER}
       WORDPRESS_DB_PASSWORD: ${MASTER_PASSWORD}
       WORDPRESS_DB_NAME: ${MASTER_DATABASE}
@@ -53,10 +53,12 @@ services:
     hostname: ${PROXYSQL_DB_HOST}
     networks:
       - cangrownet
+    # ports:
+    #   - "6033:6033"
     environment:
       MYSQL_ROOT_PASSWORD: ${PROXYSQL_ROOT_PASSWORD}
-    volumes:
-      - ./proxysql/proxysql.cnf:/etc/proxysql.cnf
+    # volumes:
+    #   - ./proxysql/proxysql.cnf:/etc/proxysql.cnf
     depends_on:
       - mariadb_replica
 
