@@ -51,6 +51,6 @@ mysql_users =
 # MySQL Query Rules
 mysql_query_rules =
 (
-    { rule_id=2, active=1, match_pattern="^UPDATE.*|^INSERT.*|DELETE.*", destination_hostgroup=0 }
-    { rule_id=1, active=1, match_pattern="^SELECT.*", destination_hostgroup=1 },
+    { rule_id=2, active=1, match_pattern="^UPDATE.*|^INSERT.*|DELETE.*", destination_hostgroup=0 },
+    { rule_id=1, active=1, match_pattern="^SELECT.*", destination_hostgroup=1 }
 )
