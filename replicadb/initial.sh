@@ -5,6 +5,9 @@
 
 # Connect slave to master.
 result=$(docker exec mariadb_master mariadb -u root --password=$MASTER_ROOT_PASSWORD --execute="show master status;")
+
+echo $result
+
 log=$(echo $result | awk '{print $5}')
 position=$(echo $result | awk '{print $6}')
 
