@@ -34,6 +34,13 @@ mysql_variables=
     connect_retries_on_failure=10
 }
 
+# MySQL Servers
+mysql_servers =
+{
+    { address="mariadb_master", port=3306, hostgroup=0 },
+    { address="mariadb_replica", port=3306, hostgroup=1 }
+}
+
 # MySQL Users
 mysql_users =
 {
