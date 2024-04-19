@@ -21,7 +21,7 @@ docker exec mariadb_replica \
    start slave;\
    SHOW SLAVE STATUS\G;"
 
-docker exec mariadb_master mariadb -u root -p "$REPLICA_ROOT_PASSWORD" -e "CREATE USER '$SHARED_USER_NAME'@'%' IDENTIFIED BY '$SHARED_USER_PASSWORD';"
+docker exec mariadb_master mariadb -u root -p "$REPLICA_ROOT_PASSWORD" -e "CREATE USER '$SHARED_USER_NAME'@'%' IDENTIFIED BY $SHARED_USER_PASSWORD;"
 
 docker exec mariadb_master mariadb -u root -p "$REPLICA_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON *.* TO '$SHARED_USER_NAME'@'localhost';"
 

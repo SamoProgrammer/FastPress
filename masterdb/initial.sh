@@ -12,7 +12,7 @@ docker exec mariadb_master \
    grant replication slave on *.* to '$REPLICATION_USER_NAME'@'%';\
    flush privileges;"
 
-docker exec mariadb_master mariadb -u root -p "$MASTER_ROOT_PASSWORD" -e "CREATE DATABASE '$MASTER_DATABASE';"
+docker exec mariadb_master mariadb -u root -p "$MASTER_ROOT_PASSWORD" -e "CREATE DATABASE $MASTER_DATABASE;"
 
 docker exec mariadb_master mariadb -u root -p "$MASTER_ROOT_PASSWORD" -e "CREATE USER '$SHARED_USER_NAME'@'%' IDENTIFIED BY '$SHARED_USER_PASSWORD';"
 
