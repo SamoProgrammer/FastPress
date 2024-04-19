@@ -92,10 +92,10 @@ services:
     networks:
       - cangrownet
     environment:
-      MYSQL_ROOT_PASSWORD: ${MASTER_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${REPLICA_ROOT_PASSWORD}
       # MYSQL_DATABASE: ${MASTER_DATABASE}
-      MYSQL_USER: ${MASTER_USER}
-      MYSQL_PASSWORD: ${MASTER_PASSWORD}
+      MYSQL_USER: ${REPLICA_USER}
+      MYSQL_PASSWORD: ${REPLICA_PASSWORD}
     depends_on:
       - mariadb_master
     volumes:
