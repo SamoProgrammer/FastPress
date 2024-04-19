@@ -45,12 +45,12 @@ mysql_servers =
 mysql_users =
 (
     { username = "samo_programmer", password = "Samo@09015267167", default_hostgroup = 0, active = 1 },
-    { username = "mohammad_mohammad", password = "Mohammad@09015267167", default_hostgroup = 1, active = 1 }
+    { username = "samo_programmer", password = "Samo@09015267167", default_hostgroup = 1, active = 1 }
 )
 
 # MySQL Query Rules
 mysql_query_rules =
 (
-    { rule_id=2, active=1, match_pattern="^UPDATE.*|^INSERT.*|DELETE.*", destination_hostgroup=0 },
-    { rule_id=1, active=1, match_pattern="^SELECT.*", destination_hostgroup=1 }
+    { rule_id=1, active=1, match_pattern="^UPDATE.*|^INSERT.*|DELETE.*", destination_hostgroup=0 },
+    { rule_id=2, active=1, match_pattern="^SELECT.*", destination_hostgroup=1 }
 )
