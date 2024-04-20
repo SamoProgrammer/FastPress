@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# .env file variables sourced into script
-# source .env
 
-# Connect slave to master.
 result=$(docker exec mariadb_master mariadb -u root --password=$MASTER_ROOT_PASSWORD --execute="show master status;")
-
-echo $result
 
 log=$(echo $result | awk '{print $5}')
 position=$(echo $result | awk '{print $6}')
 
+# Connect slave to master.
 docker exec mariadb_replica \
     mariadb -u root --password=$REPLICA_ROOT_PASSWORD \
     --execute="stop slave;\
@@ -21,7 +17,8 @@ docker exec mariadb_replica \
    start slave;\
    SHOW SLAVE STATUS\G;"
 
-docker exec mariadb_master mariadb -u root --password=$REPLICA_ROOT_PASSWORD --execute="CREATE USER '$SHARED_USER_NAME'@'%' IDENTIFIED BY $SHARED_USER_PASSWORD;"
+# Creating shared user between databases
+docker exec mariadb_master mariadb -u root --password=$REPLICA_ROOT_PASSWORD --execute="CREATE USER IF NOT EXISTS '$SHARED_USER_NAME'@'%' IDENTIFIED BY $SHARED_USER_PASSWORD;"
 
 docker exec mariadb_master mariadb -u root --password=$REPLICA_ROOT_PASSWORD --execute="GRANT ALL PRIVILEGES ON *.* TO '$SHARED_USER_NAME'@'localhost';"
 
