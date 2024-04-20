@@ -25,6 +25,7 @@ services:
       - proxysql
     volumes:
       - wordpress_data:/var/www/html
+      - ./wordpress_theme/twentytwentytwo:/var/www/html/wp-content/themes/twentytwentytwo
     environment:
       WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
       WORDPRESS_DB_USER: ${SHARED_USER_NAME}
@@ -41,6 +42,7 @@ services:
       - proxysql
     volumes:
       - wordpress_data:/var/www/html
+      - ./wordpress_theme/twentytwentytwo:/var/www/html/wp-content/themes/twentytwentytwo
     environment:
       WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
       WORDPRESS_DB_USER: ${SHARED_USER_NAME}
