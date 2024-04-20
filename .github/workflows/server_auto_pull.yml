@@ -20,4 +20,4 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd /opt/mohammad_mohammadi_cangrow/
-            sudo git pull
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S git pull
