@@ -14,13 +14,13 @@ jobs:
 
       - name: install ssh keys
         run: |
-        install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ secrets.SERVER_KEY }}" > ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.SERVER_HOST }} > ~/.ssh/known_hosts
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SERVER_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
-      run: ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd /opt/mohammad_mohammadi_cangrow/ && echo ${{ secrets.SERVER_PASSWORD }} | sudo -S git pull && exit"
+        run: ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd /opt/mohammad_mohammadi_cangrow/ && echo ${{ secrets.SERVER_PASSWORD }} | sudo -S git pull && exit"
       - name: cleanup
-      run: rm -rf ~/.ssh
+        run: rm -rf ~/.ssh
 
       # - name: Deploy WordPress Theme
       #   uses: appleboy/ssh-action@v1.0.3
