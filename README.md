@@ -1,3 +1,6 @@
+## PROJECT STATUS : Completed until end of phase 4.
+but there is problem of connecting server with ssh in github action. timeout error
+
 # how to use project :
 
 ### 1-Install git (for getting the newest updates):
