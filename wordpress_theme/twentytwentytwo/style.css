@@ -152,7 +152,7 @@ body > .is-root-container > .wp-block-template-part > .wp-block-cover,
  */
 
 .wp-block-post-comments ol.commentlist ul.children {
-	margin-top: 1rem;
+	margin-top: 2rem;
 	margin-bottom: 1rem;
 }
 
