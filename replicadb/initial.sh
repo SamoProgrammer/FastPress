@@ -14,8 +14,7 @@ docker exec mariadb_replica \
    CHANGE MASTER TO MASTER_HOST='$MASTER_DB_HOST', MASTER_USER='$REPLICATION_USER_NAME', \
    MASTER_PASSWORD='$REPLICATION_USER_PASSWORD', MASTER_LOG_FILE='$log', MASTER_PORT=3306,
    MASTER_CONNECT_RETRY=10 , MASTER_LOG_POS=$position;\
-   start slave;\
-   SHOW SLAVE STATUS\G;"
+   start slave;"
 
 # Creating shared user between databases
 docker exec mariadb_master mariadb -u root --password=$REPLICA_ROOT_PASSWORD --execute="CREATE USER IF NOT EXISTS '$SHARED_USER_NAME'@'%' IDENTIFIED BY $SHARED_USER_PASSWORD;"
