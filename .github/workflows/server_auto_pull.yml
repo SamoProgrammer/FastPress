@@ -13,11 +13,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy WordPress Theme
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 185.240.151.84
-          username: debian
-          password: 2o8z9n6p1w
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
           script: |
             cd /opt/mohammad_mohammadi_cangrow/
-            echo 2o8z9n6p1w | sudo -S git pull
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S git pull
