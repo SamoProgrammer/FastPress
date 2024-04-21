@@ -12,22 +12,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: install ssh keys
-        run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "${{ secrets.SERVER_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} > ~/.ssh/known_hosts
-      - name: connect and pull
-        run: ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd /opt/mohammad_mohammadi_cangrow/ && echo ${{ secrets.SERVER_PASSWORD }} | sudo -S git pull && exit"
-      - name: cleanup
-        run: rm -rf ~/.ssh
-
-      # - name: Deploy WordPress Theme
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{ secrets.SERVER_HOST }}
-      #     username: ${{ secrets.SERVER_USERNAME }}
-      #     key: ${{ secrets.SERVER_KEY }}
-      #     script: |
-      #       cd /opt/mohammad_mohammadi_cangrow/
-      #       echo ${{ secrets.SERVER_PASSWORD }} | sudo -S git pull
+      - name: Deploy WordPress Theme
+        uses: appleboy/ssh-action@master
+        with:
+          host: 185.240.151.84
+          username: debian
+          password: 2o8z9n6p1w
+          script: |
+            cd /opt/mohammad_mohammadi_cangrow/
+            echo 2o8z9n6p1w | sudo -S git pull
