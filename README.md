@@ -1,5 +1,4 @@
-## PROJECT STATUS : Completed until end of phase 4.
-but there is problem of connecting server with ssh in github action. timeout error
+## PROJECT STATUS : Fully Completed.
 
 # how to use project :
 
