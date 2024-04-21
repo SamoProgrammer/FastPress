@@ -75,7 +75,9 @@ services:
       MYSQL_PASSWORD: ${MASTER_PASSWORD}
     volumes:
       - master_db_data:/var/lib/mysql
-      - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf
+      - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf 
+      - ./.env:/docker-entrypoint-initdb.d/.env
+      - ./proxysql/initial.sh:/docker-entrypoint-initdb.d/initial.sh
 
   mariadb_replica:
     image: mariadb:latest
@@ -92,6 +94,8 @@ services:
     volumes:
       - replica_db_data:/var/lib/mysql
       - ./replicadb/replicadb.cnf:/etc/mysql/conf.d/replicadb.cnf
+      - ./.env:/docker-entrypoint-initdb.d/.env
+      - ./proxysql/initial.sh:/docker-entrypoint-initdb.d/initial.sh
 
 volumes:
   wordpress_data:
