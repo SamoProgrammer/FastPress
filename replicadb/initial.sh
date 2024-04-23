@@ -16,3 +16,11 @@ mariadb -u root --password=$REPLICA_ROOT_PASSWORD --execute="CREATE USER IF NOT 
 mariadb -u root --password=$REPLICA_ROOT_PASSWORD --execute="GRANT ALL PRIVILEGES ON *.* TO '$SHARED_USER_NAME'@'localhost';"
 
 mariadb -u root --password=$REPLICA_ROOT_PASSWORD --execute="GRANT ALL PRIVILEGES ON *.* TO '$SHARED_USER_NAME'@'%';"
+
+
+# Creating monitor user
+mariadb -u root --password=$MASTER_ROOT_PASSWORD --execute="CREATE USER IF NOT EXISTS '$MONITOR_USER_NAME'@'%' IDENTIFIED BY '$MONITOR_USER_PASSWORD';"
+
+mariadb -u root --password=$MASTER_ROOT_PASSWORD --execute="GRANT ALL PRIVILEGES ON *.* TO '$MONITOR_USER_NAME'@'localhost';"
+
+mariadb -u root --password=$MASTER_ROOT_PASSWORD --execute="GRANT ALL PRIVILEGES ON *.* TO '$MONITOR_USER_NAME'@'%';"
