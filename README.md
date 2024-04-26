@@ -1,6 +1,8 @@
+# Mohammad Mohammadi
+
 ## PROJECT STATUS : Fully Completed.
 
-# how to use project :
+## how to use project :
 
 ### 1-Install git (for getting the newest updates):
 ```sh
@@ -14,10 +16,10 @@ To install the docker engine go to [Link](https://docs.docker.com/engine/install
 
 ### 4-start the project with this command:
 ```sh
-sudo bash start.sh
+sudo bash install.sh
 ```
 
 ### Note: you can stop the project by :
 ```sh
-sudo bash stop.sh
+sudo bash uninstall.sh
 ```
