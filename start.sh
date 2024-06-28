@@ -7,5 +7,10 @@ sleep 2s
 
 docker compose up -d
 
-sleep 6s
+sleep 15s
 
+source ./masterdb/initial.sh
+
+sleep 7s
+
+source ./replicadb/initial.sh

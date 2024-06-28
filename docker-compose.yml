@@ -1,62 +1,66 @@
 version: "3.8"
 
 services:
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    hostname: nginx
-    networks:
-      - cangrownet
-    ports:
-      - 80:80
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - wordpress1
-      - wordpress2
 
-  wordpress1:
-    image: wordpress:latest
-    container_name: wordpress1
-    hostname: wordpress1
-    networks:
-      - cangrownet
-    depends_on:
-      - proxysql
-    volumes:
-      - wordpress_data:/var/www/html
-      - ./wordpress_theme/twentytwentytwo:/var/www/html/wp-content/themes/twentytwentytwo
-    environment:
-      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
-      WORDPRESS_DB_USER: ${SHARED_USER_NAME}
-      WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
-      WORDPRESS_DB_NAME: ${MASTER_DATABASE}
+  # nginx:
+    # image: nginx:latest
+    # container_name: nginx
+    # hostname: nginx
+    # networks:
+    #   - cangrownet
+    # ports:
+    #   - 80:80
+    # volumes:
+    #   - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    # depends_on:
+    #   - wordpress1
+    #   - wordpress2
 
-  wordpress2:
-    image: wordpress:latest
-    container_name: wordpress2
-    hostname: wordpress2
-    networks:
-      - cangrownet
-    depends_on:
-      - proxysql
-    volumes:
-      - wordpress_data:/var/www/html
-      - ./wordpress_theme/twentytwentytwo:/var/www/html/wp-content/themes/twentytwentytwo
-    environment:
-      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
-      WORDPRESS_DB_USER: ${SHARED_USER_NAME}
-      WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
-      WORDPRESS_DB_NAME: ${MASTER_DATABASE}
+  # wordpress1:
+  #   image: wordpress:latest
+  #   container_name: wordpress1
+  #   hostname: wordpress1
+  #   networks:
+  #     - cangrownet
+  #   depends_on:
+  #     - proxysql
+  #   volumes:
+  #     - wordpress_data:/var/www/html
+  #     # - ./wordpress_theme/twentytwentytwo:/var/www/html/wp-content/themes/twentytwentytwo
+  #   environment:
+  #     WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
+  #     WORDPRESS_DB_USER: ${SHARED_USER_NAME}
+  #     WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
+  #     WORDPRESS_DB_NAME: ${MASTER_DATABASE}
+
+  # wordpress2:
+  #   image: wordpress:latest
+  #   container_name: wordpress2
+  #   hostname: wordpress2
+  #   networks:
+  #     - cangrownet
+  #   depends_on:
+  #     - proxysql
+  #   volumes:
+  #     - wordpress_data:/var/www/html
+  #     # - ./wordpress_theme/twentytwentytwo:/var/www/html/wp-content/themes/twentytwentytwo
+  #   environment:
+  #     WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
+  #     WORDPRESS_DB_USER: ${SHARED_USER_NAME}
+  #     WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
+  #     WORDPRESS_DB_NAME: ${MASTER_DATABASE}
 
   proxysql:
     image: proxysql/proxysql:latest
     container_name: proxysql
+    restart: always
     hostname: ${PROXYSQL_DB_HOST}
     networks:
       - cangrownet
+    ports:
+      - 5432:5432
     environment:
-      MYSQL_ROOT_PASSWORD: ${PROXYSQL_ROOT_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${PROXYSQL_ROOT_PASSWORD}
     volumes:
       - ./proxysql/proxysql.cnf:/etc/proxysql.cnf
     depends_on:
@@ -65,37 +69,35 @@ services:
   mariadb_master:
     image: mariadb:latest
     container_name: mariadb_master
+    restart: always
     hostname: ${MASTER_DB_HOST}
     networks:
       - cangrownet
     environment:
-      MYSQL_ROOT_PASSWORD: ${MASTER_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MASTER_DATABASE}
-      MYSQL_USER: ${MASTER_USER}
-      MYSQL_PASSWORD: ${MASTER_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MASTER_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MASTER_DATABASE}
+      MARIADB_USER: ${MASTER_USER}
+      MARIADB_PASSWORD: ${MASTER_PASSWORD}
     volumes:
       - master_db_data:/var/lib/mysql
-      - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf 
-      - ./.env:/docker-entrypoint-initdb.d/.env
-      - ./proxysql/initial.sh:/docker-entrypoint-initdb.d/initial.sh
+      - ./masterdb/masterdb.cnf:/etc/mysql/conf.d/masterdb.cnf
 
   mariadb_replica:
     image: mariadb:latest
+    restart: always
     container_name: mariadb_replica
     hostname: mariadb_replica
     networks:
       - cangrownet
     environment:
-      MYSQL_ROOT_PASSWORD: ${REPLICA_ROOT_PASSWORD}
-      MYSQL_USER: ${REPLICA_USER}
-      MYSQL_PASSWORD: ${REPLICA_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${REPLICA_ROOT_PASSWORD}
+      MARIADB_USER: ${REPLICA_USER}
+      MARIADB_PASSWORD: ${REPLICA_PASSWORD}
     depends_on:
       - mariadb_master
     volumes:
       - replica_db_data:/var/lib/mysql
-      - ./replicadb/replicadb.cnf:/etc/mysql/conf.d/replicadb.cnf
-      - ./.env:/docker-entrypoint-initdb.d/.env
-      - ./proxysql/initial.sh:/docker-entrypoint-initdb.d/initial.sh
+      - ./replicadb/replicadb.cnf:/etc/mysql/conf.d/replicadb.cnf  
 
 volumes:
   wordpress_data:
