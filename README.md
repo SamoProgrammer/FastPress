@@ -1,6 +1,6 @@
 # Fast Press
 
-## easy install wodpress with docker with extra Load Balancing and Speed Optimization
+### easy install wodpress with docker with extra Load Balancing and Speed Optimization
 
 ## how to use project :
 
