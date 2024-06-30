@@ -2,53 +2,67 @@ version: "3.8"
 
 services:
 
-  # nginx:
-    # image: nginx:latest
-    # container_name: nginx
-    # hostname: nginx
-    # networks:
-    #   - cangrownet
-    # ports:
-    #   - 80:80
-    # volumes:
-    #   - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    # depends_on:
-    #   - wordpress1
-    #   - wordpress2
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    hostname: nginx
+    networks:
+      - fastpressnet
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - wordpress1
+      - wordpress2
 
-  # wordpress1:
-  #   image: wordpress:latest
-  #   container_name: wordpress1
-  #   hostname: wordpress1
-  #   networks:
-  #     - cangrownet
-  #   depends_on:
-  #     - proxysql
-  #   volumes:
-  #     - wordpress_data:/var/www/html
-  #     # - ./wordpress_theme/twentytwentytwo:/var/www/html/wp-content/themes/twentytwentytwo
-  #   environment:
-  #     WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
-  #     WORDPRESS_DB_USER: ${SHARED_USER_NAME}
-  #     WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
-  #     WORDPRESS_DB_NAME: ${MASTER_DATABASE}
+  wordpress1:
+    image: wordpress:latest
+    container_name: wordpress1
+    hostname: wordpress1
+    networks:
+      - fastpressnet
+    depends_on:
+      - proxysql
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
+      WORDPRESS_DB_USER: ${SHARED_USER_NAME}
+      WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
+      WORDPRESS_DB_NAME: ${MASTER_DATABASE}
 
-  # wordpress2:
-  #   image: wordpress:latest
-  #   container_name: wordpress2
-  #   hostname: wordpress2
-  #   networks:
-  #     - cangrownet
-  #   depends_on:
-  #     - proxysql
-  #   volumes:
-  #     - wordpress_data:/var/www/html
-  #     # - ./wordpress_theme/twentytwentytwo:/var/www/html/wp-content/themes/twentytwentytwo
-  #   environment:
-  #     WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
-  #     WORDPRESS_DB_USER: ${SHARED_USER_NAME}
-  #     WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
-  #     WORDPRESS_DB_NAME: ${MASTER_DATABASE}
+  wordpress2:
+    image: wordpress:latest
+    container_name: wordpress2
+    hostname: wordpress2
+    networks:
+      - fastpressnet
+    depends_on:
+      - proxysql
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
+      WORDPRESS_DB_USER: ${SHARED_USER_NAME}
+      WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
+      WORDPRESS_DB_NAME: ${MASTER_DATABASE}
+
+  wordpress3:
+    image: wordpress:latest
+    container_name: wordpress3
+    hostname: wordpress3
+    networks:
+      - fastpressnet
+    depends_on:
+      - proxysql
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: ${PROXYSQL_DB_HOST}:6033
+      WORDPRESS_DB_USER: ${SHARED_USER_NAME}
+      WORDPRESS_DB_PASSWORD: ${SHARED_USER_PASSWORD}
+      WORDPRESS_DB_NAME: ${MASTER_DATABASE}
 
   proxysql:
     image: proxysql/proxysql:latest
@@ -56,7 +70,7 @@ services:
     restart: always
     hostname: ${PROXYSQL_DB_HOST}
     networks:
-      - cangrownet
+      - fastpressnet
     ports:
       - 5432:5432
     environment:
@@ -72,7 +86,7 @@ services:
     restart: always
     hostname: ${MASTER_DB_HOST}
     networks:
-      - cangrownet
+      - fastpressnet
     environment:
       MARIADB_ROOT_PASSWORD: ${MASTER_ROOT_PASSWORD}
       MARIADB_DATABASE: ${MASTER_DATABASE}
@@ -88,7 +102,7 @@ services:
     container_name: mariadb_replica
     hostname: mariadb_replica
     networks:
-      - cangrownet
+      - fastpressnet
     environment:
       MARIADB_ROOT_PASSWORD: ${REPLICA_ROOT_PASSWORD}
       MARIADB_USER: ${REPLICA_USER}
@@ -104,7 +118,7 @@ volumes:
   master_db_data:
   replica_db_data:
 networks:
-  cangrownet:
+  fastpressnet:
     driver: bridge
     ipam:
       driver: default
