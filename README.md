@@ -1,4 +1,4 @@
-![wordpress with docker](http://url/to/img.png](https://davidyeiser.com/images/tutorials/cover-image-docker-wordpress.png)
+![wordpress with docker](https://davidyeiser.com/images/tutorials/cover-image-docker-wordpress.png)
 # Fast Press
 
 ### easy install wodpress with docker with extra Load Balancing and Speed Optimization
